@@ -54,11 +54,11 @@ export function UrnaKeyboard({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [digitsDisabled, corrigeDisabled, confirmDisabled, onDigit, onCorrige, onConfirma])
 
-  const numberTextClass = compact ? 'text-sm' : 'text-base sm:text-xl'
+  const numberTextClass = compact ? 'text-lg' : 'text-base sm:text-xl'
   const sideKeyClass = compact
-    ? 'min-w-12 whitespace-nowrap px-1 text-[9px]'
+    ? 'min-w-16 whitespace-nowrap px-2 text-xs'
     : 'min-w-16 whitespace-nowrap px-1.5 text-[10px] sm:min-w-24 sm:px-3 sm:text-sm'
-  const gapClass = compact ? 'gap-1' : 'gap-2 sm:gap-3'
+  const gapClass = compact ? 'gap-1.5' : 'gap-2 sm:gap-3'
 
   return (
     <div className={`flex justify-center ${gapClass}`} role="group" aria-label="Teclado da urna">

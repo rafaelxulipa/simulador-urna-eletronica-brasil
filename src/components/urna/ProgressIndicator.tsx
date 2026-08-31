@@ -27,7 +27,7 @@ export function ProgressIndicator({ currentIndex, compact = false }: ProgressInd
           return (
             <li key={step.code} className="flex flex-1 flex-col items-center gap-1">
               <span
-                className={`flex items-center justify-center rounded-full font-bold ${compact ? 'h-4 w-4 text-[9px]' : 'h-6 w-6 text-xs'} ${
+                className={`flex items-center justify-center rounded-full font-bold ${compact ? 'h-5 w-5 text-[10px]' : 'h-6 w-6 text-xs'} ${
                   state === 'done'
                     ? 'bg-urna-confirm text-urna-confirm-text'
                     : state === 'current'

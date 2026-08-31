@@ -26,7 +26,7 @@ const VARIANT_CLASSES: Record<UrnaKeyVariant, string> = {
 export function UrnaKey({ label, variant, disabled, onPress, ariaLabel, className = '', compact = false }: UrnaKeyProps) {
   const [pressed, setPressed] = useState(false)
   const sizeClasses = compact
-    ? 'min-h-8 min-w-8 rounded-md px-1'
+    ? 'min-h-12 min-w-12 rounded-lg px-1'
     : 'min-h-11 min-w-11 rounded-lg px-1 sm:min-h-16 sm:min-w-16 sm:rounded-xl sm:px-2'
 
   return (
