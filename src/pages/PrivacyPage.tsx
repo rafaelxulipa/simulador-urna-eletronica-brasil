@@ -30,7 +30,8 @@ export function PrivacyPage() {
         <ul className="list-inside list-disc">
           <li>tamanho da fonte (A-/A/A+) e alto contraste;</li>
           <li>som, voz e volume ligados/desligados;</li>
-          <li>se você já aceitou estes termos.</li>
+          <li>se você já aceitou estes termos;</li>
+          <li>se este navegador já foi contado no contador de visitas (item 4).</li>
         </ul>
         <p>
           Nada disso sai do seu navegador. Não temos acesso a essas informações, e você pode apagá-las a
@@ -48,10 +49,16 @@ export function PrivacyPage() {
       </section>
 
       <section className="flex flex-col gap-2">
-        <h2 className="text-xl font-bold">4. Sem rastreamento e sem propaganda</h2>
+        <h2 className="text-xl font-bold">4. Contador de visitas</h2>
         <p>
-          Não usamos cookies de rastreamento, não usamos ferramentas de analytics invasivas e não exibimos
-          anúncios.
+          Mostramos, no rodapé, um número total de visitas ao site. Esse número é apenas uma contagem agregada —
+          não guardamos endereço IP, nem qualquer identificador ligado a você. Para evitar contar a mesma pessoa
+          várias vezes a cada recarga da página, marcamos no seu navegador (item 2 acima) que ele já foi contado;
+          essa marcação não sai do seu aparelho.
+        </p>
+        <p>
+          Fora isso, não usamos cookies de rastreamento, não usamos ferramentas de analytics invasivas e não
+          exibimos anúncios.
         </p>
       </section>
 

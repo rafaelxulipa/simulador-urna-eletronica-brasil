@@ -5,12 +5,14 @@ import { AudioControls } from '../audio/AudioControls'
 import { TermsConsentBar } from './TermsConsentBar'
 import { useSessionStore } from '@/stores/sessionStore'
 import { useConsentStore } from '@/stores/consentStore'
+import { useVisitCounter } from '@/hooks/useVisitCounter'
 
 export function AppShell() {
   const location = useLocation()
   const navigate = useNavigate()
   const reset = useSessionStore((s) => s.reset)
   const accepted = useConsentStore((s) => s.accepted)
+  const visits = useVisitCounter()
   const isLanding = location.pathname === '/'
 
   function goHome() {
@@ -61,7 +63,7 @@ export function AppShell() {
       <main id="main-content" className={`flex flex-1 flex-col ${accepted ? '' : 'pb-32 sm:pb-24'}`}>
         <Outlet />
       </main>
-      <footer className="flex flex-wrap justify-center gap-4 border-t border-urna-text-secondary/20 px-4 py-4 text-sm text-urna-text-secondary">
+      <footer className="flex flex-wrap items-center justify-center gap-4 border-t border-urna-text-secondary/20 px-4 py-4 text-sm text-urna-text-secondary">
         <Link to="/fontes" className="underline">
           Fontes
         </Link>
@@ -71,6 +73,11 @@ export function AppShell() {
         <Link to="/privacidade" className="underline">
           Política de Privacidade
         </Link>
+        {visits !== null && (
+          <span aria-live="polite">
+            {visits.toLocaleString('pt-BR')} {visits === 1 ? 'visita' : 'visitas'}
+          </span>
+        )}
       </footer>
       <TermsConsentBar />
       <VLibrasWidget />
