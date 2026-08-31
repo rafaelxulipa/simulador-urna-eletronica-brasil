@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { getPool } from './_db'
+import { getPool } from './_db.js'
 
 /** Candidate id is always a numeric SQ_CANDIDATO string (see scripts/sync-tse). */
 function isValidCandidateId(value: unknown): value is string {

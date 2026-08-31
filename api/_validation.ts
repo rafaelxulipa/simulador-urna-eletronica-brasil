@@ -1,4 +1,4 @@
-import { BRAZILIAN_STATES } from '../src/data/states'
+import { BRAZILIAN_STATES } from '../src/data/states.js'
 
 const VALID_STATE_CODES = new Set(BRAZILIAN_STATES.map((s) => s.code))
 const VALID_OFFICE_CODES = new Set(['FEDERAL_DEPUTY', 'STATE_DEPUTY', 'SENATOR', 'GOVERNOR', 'PRESIDENT'])

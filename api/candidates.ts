@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { getPool } from './_db'
-import { isValidBallotNumberFragment, isValidOfficeCode, isValidStateCode } from './_validation'
+import { getPool } from './_db.js'
+import { isValidBallotNumberFragment, isValidOfficeCode, isValidStateCode } from './_validation.js'
 
 interface CandidateRow {
   id: string
