@@ -41,6 +41,12 @@ export function devApiPlugin(): Plugin {
               res.setHeader('Content-Type', 'application/json')
               res.end(JSON.stringify(payload))
             },
+            // api/photo.ts sends raw image bytes via .send(Buffer) — VercelResponse
+            // supports this in production; the local dev mock needs it too.
+            send(body: Buffer | string) {
+              res.statusCode = this.statusCode
+              res.end(body)
+            },
           }
 
           await handler({ method: req.method, query }, mockRes)
