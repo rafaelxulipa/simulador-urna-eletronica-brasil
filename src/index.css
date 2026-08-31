@@ -1,0 +1,123 @@
+@import 'tailwindcss';
+@import '@fontsource/atkinson-hyperlegible/400.css';
+@import '@fontsource/atkinson-hyperlegible/700.css';
+@import '@fontsource/atkinson-hyperlegible/400-italic.css';
+
+/*
+ * Design tokens for the Urna component tree. urna-case/urna-glass-* match
+ * real UE2022 reference photos (white cabinet, light-gray screen with black
+ * text) — see docs/urna-visual-reference.md. urna-body/urna-text/etc. are a
+ * separate dark-theme palette used by the surrounding page chrome (header,
+ * buttons, landing page) — intentionally NOT the same as the physical
+ * urna's own colors. BRANCO/CORRIGE/CONFIRMA colors are shared by both,
+ * confirmed against the same reference photos.
+ */
+@theme {
+  --font-sans: 'Atkinson Hyperlegible', system-ui, sans-serif;
+
+  --color-urna-body: #1c1e24;
+  --color-urna-body-light: #2b2e37;
+  --color-urna-screen: #0d3b66;
+  --color-urna-screen-dark: #082744;
+  --color-urna-text: #f4f6f8;
+  --color-urna-text-secondary: #b7c0cc;
+
+  /* The physical urna's real coloring — white/light-gray plastic, light screen, black text. */
+  --color-urna-case: #eeeeec;
+  --color-urna-case-shadow: #c9c9c4;
+  --color-urna-glass: #e6e6e3;
+  --color-urna-glass-bezel: #3a3a38;
+  --color-urna-glass-text: #1a1a1a;
+  --color-urna-glass-text-secondary: #57564f;
+
+  --color-urna-key: #16181d;
+  --color-urna-key-light: #24262c;
+  --color-urna-key-text: #ffffff;
+
+  --color-urna-blank: #f7f7f5;
+  --color-urna-blank-text: #16181d;
+  --color-urna-correct: #e8871e;
+  --color-urna-correct-text: #ffffff;
+  --color-urna-confirm: #1f8a4c;
+  --color-urna-confirm-text: #ffffff;
+
+  --color-brand-bg: #0b1420;
+  --color-brand-surface: #101c2c;
+  --color-brand-accent: #3b82f6;
+
+  --shadow-key: 0 3px 0 rgba(0, 0, 0, 0.45), 0 6px 10px rgba(0, 0, 0, 0.3);
+  --shadow-key-pressed: 0 1px 0 rgba(0, 0, 0, 0.45), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+:root {
+  color-scheme: dark light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-brand-bg);
+  color: var(--color-urna-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Respect prefers-reduced-motion everywhere by default (see docs/accessibility.md) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Font-size scale driven by the accessibility store (A-/A/A+), see src/stores/accessibilityStore.ts */
+:root[data-font-scale='sm'] {
+  font-size: 15px;
+}
+:root[data-font-scale='md'] {
+  font-size: 17px;
+}
+:root[data-font-scale='lg'] {
+  font-size: 20px;
+}
+
+:root[data-contrast='high'] {
+  --color-urna-body: #000000;
+  --color-urna-body-light: #000000;
+  --color-urna-screen: #000000;
+  --color-urna-screen-dark: #000000;
+  --color-urna-text: #ffffff;
+  --color-urna-text-secondary: #ffffff;
+  --color-urna-case: #000000;
+  --color-urna-case-shadow: #000000;
+  --color-urna-glass: #000000;
+  --color-urna-glass-bezel: #ffffff;
+  --color-urna-glass-text: #ffffff;
+  --color-urna-glass-text-secondary: #ffffff;
+  /* Inverted (white key / black number) rather than near-black-on-black — a
+     pure-black key on the now-pure-black panel would lose its button shape. */
+  --color-urna-key: #ffffff;
+  --color-urna-key-light: #d0d0d0;
+  --color-urna-key-text: #000000;
+  --color-urna-blank: #ffffff;
+  --color-urna-blank-text: #000000;
+  --color-urna-correct: #ff9900;
+  --color-urna-correct-text: #000000;
+  --color-urna-confirm: #00c853;
+  --color-urna-confirm-text: #000000;
+  --color-brand-bg: #000000;
+  --color-brand-surface: #000000;
+}
+
+:root[data-contrast='high'] body {
+  background: #000000;
+}
