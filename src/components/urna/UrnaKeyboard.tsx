@@ -10,6 +10,8 @@ export interface UrnaKeyboardProps {
   brancoDisabled: boolean
   corrigeDisabled: boolean
   confirmDisabled: boolean
+  /** Fullscreen mobile-landscape: fixed small keys instead of the sm: escalation. */
+  compact?: boolean
 }
 
 const NUMBER_ROWS = [
@@ -34,6 +36,7 @@ export function UrnaKeyboard({
   brancoDisabled,
   corrigeDisabled,
   confirmDisabled,
+  compact = false,
 }: UrnaKeyboardProps) {
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -51,9 +54,15 @@ export function UrnaKeyboard({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [digitsDisabled, corrigeDisabled, confirmDisabled, onDigit, onCorrige, onConfirma])
 
+  const numberTextClass = compact ? 'text-sm' : 'text-base sm:text-xl'
+  const sideKeyClass = compact
+    ? 'min-w-12 whitespace-nowrap px-1 text-[9px]'
+    : 'min-w-16 whitespace-nowrap px-1.5 text-[10px] sm:min-w-24 sm:px-3 sm:text-sm'
+  const gapClass = compact ? 'gap-1' : 'gap-2 sm:gap-3'
+
   return (
-    <div className="flex justify-center gap-2 sm:gap-3" role="group" aria-label="Teclado da urna">
-      <div className="grid grid-cols-3 gap-2 sm:gap-3">
+    <div className={`flex justify-center ${gapClass}`} role="group" aria-label="Teclado da urna">
+      <div className={`grid grid-cols-3 ${gapClass}`}>
         {NUMBER_ROWS.flat().map((digit) => (
           <UrnaKey
             key={digit}
@@ -62,7 +71,8 @@ export function UrnaKeyboard({
             ariaLabel={`Tecla ${digit}`}
             disabled={digitsDisabled}
             onPress={() => onDigit(digit)}
-            className="text-base sm:text-xl"
+            className={numberTextClass}
+            compact={compact}
           />
         ))}
         <span aria-hidden="true" />
@@ -72,18 +82,20 @@ export function UrnaKeyboard({
           ariaLabel="Tecla 0"
           disabled={digitsDisabled}
           onPress={() => onDigit('0')}
-          className="text-base sm:text-xl"
+          className={numberTextClass}
+          compact={compact}
         />
         <span aria-hidden="true" />
       </div>
-      <div className="flex flex-col gap-2 sm:gap-3">
+      <div className={`flex flex-col ${gapClass}`}>
         <UrnaKey
           label="BRANCO"
           variant="blank"
           ariaLabel="Branco"
           disabled={brancoDisabled}
           onPress={onBranco}
-          className="min-w-16 whitespace-nowrap px-1.5 text-[10px] sm:min-w-24 sm:px-3 sm:text-sm"
+          className={sideKeyClass}
+          compact={compact}
         />
         <UrnaKey
           label="CORRIGE"
@@ -91,7 +103,8 @@ export function UrnaKeyboard({
           ariaLabel="Corrige"
           disabled={corrigeDisabled}
           onPress={onCorrige}
-          className="min-w-16 whitespace-nowrap px-1.5 text-[10px] sm:min-w-24 sm:px-3 sm:text-sm"
+          className={sideKeyClass}
+          compact={compact}
         />
         <UrnaKey
           label="CONFIRMA"
@@ -99,7 +112,8 @@ export function UrnaKeyboard({
           ariaLabel="Confirma"
           disabled={confirmDisabled}
           onPress={onConfirma}
-          className="min-w-16 whitespace-nowrap px-1.5 text-[10px] sm:min-w-24 sm:px-3 sm:text-sm"
+          className={sideKeyClass}
+          compact={compact}
         />
       </div>
     </div>

@@ -2,6 +2,8 @@ import { electionSequence } from '@/domain/election/electionSequence'
 
 export interface ProgressIndicatorProps {
   currentIndex: number
+  /** Fullscreen mobile-landscape: smaller dots, labels dropped to save vertical space. */
+  compact?: boolean
 }
 
 /**
@@ -10,7 +12,7 @@ export interface ProgressIndicatorProps {
  * exact visual design, so this is an original interpretation that never
  * relies on color alone (check mark / filled dot / outline dot + text).
  */
-export function ProgressIndicator({ currentIndex }: ProgressIndicatorProps) {
+export function ProgressIndicator({ currentIndex, compact = false }: ProgressIndicatorProps) {
   const total = electionSequence.length
   const office = electionSequence[currentIndex]
 
@@ -25,7 +27,7 @@ export function ProgressIndicator({ currentIndex }: ProgressIndicatorProps) {
           return (
             <li key={step.code} className="flex flex-1 flex-col items-center gap-1">
               <span
-                className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
+                className={`flex items-center justify-center rounded-full font-bold ${compact ? 'h-4 w-4 text-[9px]' : 'h-6 w-6 text-xs'} ${
                   state === 'done'
                     ? 'bg-urna-confirm text-urna-confirm-text'
                     : state === 'current'
@@ -35,9 +37,11 @@ export function ProgressIndicator({ currentIndex }: ProgressIndicatorProps) {
               >
                 {state === 'done' ? '✓' : index + 1}
               </span>
-              <span className="hidden text-center text-[10px] leading-tight text-urna-glass-text-secondary sm:block">
-                {step.shortLabel}
-              </span>
+              {!compact && (
+                <span className="hidden text-center text-[10px] leading-tight text-urna-glass-text-secondary sm:block">
+                  {step.shortLabel}
+                </span>
+              )}
             </li>
           )
         })}

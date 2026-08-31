@@ -10,6 +10,9 @@ export interface UrnaKeyProps {
   onPress: () => void
   ariaLabel: string
   className?: string
+  /** Fullscreen mobile-landscape has little vertical room to spare — a fixed small
+      size instead of the sm: breakpoint escalation, which assumes width is what's tight. */
+  compact?: boolean
 }
 
 const VARIANT_CLASSES: Record<UrnaKeyVariant, string> = {
@@ -20,8 +23,11 @@ const VARIANT_CLASSES: Record<UrnaKeyVariant, string> = {
 }
 
 /** A single physical key of the urna keyboard — mouse, touch, and keyboard all trigger onPress. */
-export function UrnaKey({ label, variant, disabled, onPress, ariaLabel, className = '' }: UrnaKeyProps) {
+export function UrnaKey({ label, variant, disabled, onPress, ariaLabel, className = '', compact = false }: UrnaKeyProps) {
   const [pressed, setPressed] = useState(false)
+  const sizeClasses = compact
+    ? 'min-h-8 min-w-8 rounded-md px-1'
+    : 'min-h-11 min-w-11 rounded-lg px-1 sm:min-h-16 sm:min-w-16 sm:rounded-xl sm:px-2'
 
   return (
     <button
@@ -33,8 +39,7 @@ export function UrnaKey({ label, variant, disabled, onPress, ariaLabel, classNam
       onPointerUp={() => setPressed(false)}
       onPointerLeave={() => setPressed(false)}
       className={`
-        min-h-11 min-w-11 rounded-lg px-1 font-bold
-        sm:min-h-16 sm:min-w-16 sm:rounded-xl sm:px-2
+        ${sizeClasses} font-bold
         transition-transform duration-75 ease-out
         shadow-key active:shadow-key-pressed
         disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none

@@ -29,11 +29,13 @@ export function Urna({ provider, selectedState, instruction, onFinished, layout 
 
   const digitsDisabled = state.status !== 'ENTER_NUMBER' || state.enteredDigits.length >= state.office.digits
   const brancoDisabled = state.status !== 'ENTER_NUMBER'
+  // Fullscreen mobile-landscape has little vertical room to spare (see UrnaKey/UrnaDisplay compact props).
+  const compact = layout === 'landscape'
 
   return (
     <UrnaPhysicalShell
       layout={layout}
-      screen={<UrnaDisplay state={state} instruction={instruction} />}
+      screen={<UrnaDisplay state={state} instruction={instruction} compact={compact} />}
       keyboard={
         <UrnaKeyboard
           onDigit={pressDigit}
@@ -44,6 +46,7 @@ export function Urna({ provider, selectedState, instruction, onFinished, layout 
           brancoDisabled={brancoDisabled}
           corrigeDisabled={!canCorrect(state)}
           confirmDisabled={!canConfirm(state)}
+          compact={compact}
         />
       }
     />

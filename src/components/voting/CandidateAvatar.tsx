@@ -27,13 +27,14 @@ function initials(name: string): string {
  * context — reinforces neutrality and that this is a training exercise, not
  * the real thing.
  */
-export function CandidateAvatar({ candidate }: { candidate: Candidate }) {
+export function CandidateAvatar({ candidate, compact = false }: { candidate: Candidate; compact?: boolean }) {
   const [imageFailed, setImageFailed] = useState(false)
   const showPhoto = candidate.photoUrl && !imageFailed
+  const sizeClass = compact ? 'h-14 w-10' : 'h-28 w-20'
 
   if (showPhoto) {
     return (
-      <div className="h-28 w-20 shrink-0 overflow-hidden rounded-lg">
+      <div className={`${sizeClass} shrink-0 overflow-hidden rounded-lg`}>
         <img
           src={candidate.photoUrl}
           alt={`Foto de ${candidate.ballotName}`}
@@ -46,7 +47,7 @@ export function CandidateAvatar({ candidate }: { candidate: Candidate }) {
 
   return (
     <div
-      className="flex h-28 w-20 shrink-0 items-center justify-center rounded-lg bg-urna-case-shadow text-2xl font-bold text-urna-glass-text"
+      className={`flex ${sizeClass} shrink-0 items-center justify-center rounded-lg bg-urna-case-shadow font-bold text-urna-glass-text ${compact ? 'text-sm' : 'text-2xl'}`}
       role="img"
       aria-label={`Sem foto disponível para ${candidate.ballotName}`}
     >
