@@ -48,6 +48,17 @@ Pesquisa sobre o recurso de áudio/voz da urna eletrônica oficial (TSE) e decis
 
 ---
 
+### Ajuste de timing/registro a partir de análise acústica (2026-08-31)
+
+- Fonte: arquivo de áudio fornecido pelo usuário (baixado por ele, não por esta sessão — ver limitação abaixo), analisado apenas por características acústicas (duração e frequência aproximada via contagem de cruzamentos de zero), nunca reproduzido, recortado ou incorporado ao produto.
+- Data da consulta: 2026-08-31
+- Informação encontrada: o clique de tecla mede ~20ms a ~2300Hz (bem mais curto e agudo que a estimativa original de 45ms/720Hz); um evento mais longo (~700ms, mesmo registro ~2250Hz) aparece após sequências de dígitos, plausivelmente o som de confirmação/candidato encontrado.
+- Decisão tomada: usar apenas esses dois números (duração, frequência aproximada) para reafinar `KEY_PRESS` (20ms, 2300Hz) e `CONFIRM` (trinado de 8 pulsos ascendentes de 2100–2500Hz ao longo de 700ms, não uma cópia do padrão exato do arquivo) em `audioService.ts`. Nenhum áudio do arquivo foi extraído, recortado ou embutido.
+- Impacto no produto: sons mais fiéis ao *ritmo* percebido da urna real, sem redistribuir conteúdo protegido.
+- **Limitação**: o usuário afirmou, sem fonte verificável apresentada até o momento, que o arquivo original é de "disponibilidade pública". Essa afirmação não foi confirmada por esta sessão (pedimos a fonte/link) — a decisão de não incorporar o áudio literal permanece até que uma licença explícita seja verificada.
+
+---
+
 ### Autoplay e políticas de navegador
 
 - Fonte: conhecimento geral de padrões web (MDN / Chrome Autoplay Policy) — não específico do TSE

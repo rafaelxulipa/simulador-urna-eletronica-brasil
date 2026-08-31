@@ -1,13 +1,29 @@
 import { expect, test } from '@playwright/test'
+import type { Page } from '@playwright/test'
+
+async function acceptTerms(page: Page) {
+  await page.getByRole('button', { name: 'Li e aceito' }).click()
+}
 
 test('landing page shows the disclaimer and the urna preview', async ({ page }) => {
   await page.goto('/')
   await expect(page.getByRole('heading', { name: 'Treine Seu Voto' })).toBeVisible()
-  await expect(page.getByText('simulador educativo independente')).toBeVisible()
+  await expect(page.getByText('simulador não oficial').first()).toBeVisible()
+})
+
+test('consent bar blocks the simulator until accepted', async ({ page }) => {
+  await page.goto('/estado')
+  await expect(page).toHaveURL('/')
+  await expect(page.getByRole('button', { name: 'Li e aceito' })).toBeVisible()
+
+  await acceptTerms(page)
+  await page.getByRole('link', { name: 'Começar simulação' }).click()
+  await expect(page).toHaveURL(/\/estado/)
 })
 
 test('full voting flow: state → mode → valid number → confirm → next office → finish', async ({ page }) => {
   await page.goto('/')
+  await acceptTerms(page)
   await page.getByRole('link', { name: 'Começar simulação' }).click()
 
   await expect(page).toHaveURL(/\/estado/)
@@ -35,6 +51,7 @@ test('full voting flow: state → mode → valid number → confirm → next off
 
 test('invalid number shows the not-found message and CORRIGE recovers', async ({ page }) => {
   await page.goto('/')
+  await acceptTerms(page)
   await page.getByRole('link', { name: 'Começar simulação' }).click()
   await page.getByRole('button', { name: /^SP / }).click()
   await page.getByRole('button', { name: /Modo Simulação/ }).click()
@@ -50,6 +67,7 @@ test('invalid number shows the not-found message and CORRIGE recovers', async ({
 
 test('blank vote requires an explicit confirmation', async ({ page }) => {
   await page.goto('/')
+  await acceptTerms(page)
   await page.getByRole('link', { name: 'Começar simulação' }).click()
   await page.getByRole('button', { name: /^DF / }).click()
   await page.getByRole('button', { name: /Modo Simulação/ }).click()

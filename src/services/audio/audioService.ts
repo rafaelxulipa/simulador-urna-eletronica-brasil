@@ -9,22 +9,35 @@ interface Tone {
   delayMs?: number
 }
 
+/** A rapid series of short pulses — used for CONFIRM's trill (see note below). */
+function trill(count: number, totalMs: number, startFreq: number, endFreq: number, pulseMs: number): Tone[] {
+  const spacing = totalMs / count
+  return Array.from({ length: count }, (_, i) => ({
+    frequency: startFreq + ((endFreq - startFreq) * i) / Math.max(1, count - 1),
+    durationMs: pulseMs,
+    type: 'square' as OscillatorType,
+    delayMs: i * spacing,
+  }))
+}
+
 /**
- * Every sound here is original (short oscillator beeps), never a reused TSE
- * audio asset — see docs/audio.md. Silently no-ops if Web Audio / Speech
- * Synthesis are unavailable or blocked, per the autoplay fail-safe rule.
+ * Every sound here is original (synthesized oscillator tones), never a
+ * reused TSE audio asset — see docs/audio.md for why. KEY_PRESS and CONFIRM's
+ * timing/register (~20ms clicks around 2.3kHz; a ~700ms high-register event)
+ * are tuned from an acoustic analysis (duration + zero-crossing frequency
+ * estimate only) of a user-supplied reference clip — no audio content from
+ * that file was extracted, copied, or embedded, only the numbers above.
+ * Silently no-ops if Web Audio / Speech Synthesis are unavailable or
+ * blocked, per the autoplay fail-safe rule.
  */
 const EVENT_TONES: Record<AudioEventType, Tone[]> = {
-  KEY_PRESS: [{ frequency: 720, durationMs: 45, type: 'square' }],
+  KEY_PRESS: [{ frequency: 2300, durationMs: 20, type: 'square' }],
   ERROR: [
     { frequency: 220, durationMs: 140, type: 'sawtooth' },
     { frequency: 165, durationMs: 180, type: 'sawtooth', delayMs: 150 },
   ],
   CORRECT: [{ frequency: 480, durationMs: 90, type: 'triangle' }],
-  CONFIRM: [
-    { frequency: 523, durationMs: 90, type: 'sine' },
-    { frequency: 659, durationMs: 140, type: 'sine', delayMs: 100 },
-  ],
+  CONFIRM: trill(8, 700, 2100, 2500, 35),
   BLANK: [{ frequency: 340, durationMs: 110, type: 'sine' }],
   NEXT_OFFICE: [{ frequency: 392, durationMs: 70, type: 'sine' }],
   FINISH: [
@@ -80,10 +93,14 @@ class AudioService {
     oscillator.stop(startAt + durationMs / 1000 + 0.02)
   }
 
-  /** Original PT-BR narration, never labeled as "the official urna voice" — see docs/audio.md. */
-  speak(text: string) {
+  /**
+   * Original PT-BR narration, never labeled as "the official urna voice" —
+   * see docs/audio.md. `force` bypasses the ambient voice toggle — for a
+   * dedicated "listen" button, the click itself is the opt-in.
+   */
+  speak(text: string, options?: { force?: boolean }) {
     const { voiceEnabled, volume } = useAudioStore.getState()
-    if (!voiceEnabled) return
+    if (!voiceEnabled && !options?.force) return
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return
     try {
       window.speechSynthesis.cancel()

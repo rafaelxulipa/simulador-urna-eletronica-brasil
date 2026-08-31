@@ -12,6 +12,8 @@ export function LandingPage() {
         </p>
       </div>
 
+      <DisclaimerBanner listenable />
+
       <UrnaHeroPreview />
 
       <div className="flex flex-col items-center gap-3 sm:flex-row">
@@ -28,8 +30,6 @@ export function LandingPage() {
           Como funciona?
         </Link>
       </div>
-
-      <DisclaimerBanner compact />
     </div>
   )
 }
