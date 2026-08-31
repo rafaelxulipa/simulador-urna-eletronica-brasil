@@ -16,11 +16,14 @@ export interface UrnaPhysicalShellProps {
 export function UrnaPhysicalShell({ screen, keyboard, layout = 'portrait' }: UrnaPhysicalShellProps) {
   if (layout === 'landscape') {
     return (
-      <div className="flex h-full w-full items-stretch gap-3 bg-urna-case p-3">
-        <div className="flex flex-1 rounded-md border-2 border-urna-glass-bezel bg-urna-glass-bezel p-1">
-          <div className="flex flex-1 flex-col overflow-hidden rounded-sm bg-urna-glass">{screen}</div>
+      <div className="flex h-full w-full items-stretch gap-2 overflow-hidden bg-urna-case p-2">
+        {/* min-w-0: without it a flex item won't shrink past its content's natural width,
+            which would push the keyboard column past the case's right edge instead of
+            everything shrinking to fit — see docs/urna-visual-reference.md. */}
+        <div className="flex min-w-0 flex-1 rounded-md border-2 border-urna-glass-bezel bg-urna-glass-bezel p-1">
+          <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-sm bg-urna-glass">{screen}</div>
         </div>
-        <div className="flex items-center rounded-xl bg-urna-case-shadow/40 p-3">{keyboard}</div>
+        <div className="flex shrink-0 items-center rounded-xl bg-urna-case-shadow/40 p-2">{keyboard}</div>
       </div>
     )
   }
