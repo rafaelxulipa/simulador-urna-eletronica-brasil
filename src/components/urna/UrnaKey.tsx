@@ -33,7 +33,8 @@ export function UrnaKey({ label, variant, disabled, onPress, ariaLabel, classNam
       onPointerUp={() => setPressed(false)}
       onPointerLeave={() => setPressed(false)}
       className={`
-        min-h-16 min-w-16 rounded-xl px-2 font-bold
+        min-h-11 min-w-11 rounded-lg px-1 font-bold
+        sm:min-h-16 sm:min-w-16 sm:rounded-xl sm:px-2
         transition-transform duration-75 ease-out
         shadow-key active:shadow-key-pressed
         disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none

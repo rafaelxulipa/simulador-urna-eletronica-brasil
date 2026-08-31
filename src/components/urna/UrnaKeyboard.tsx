@@ -52,8 +52,8 @@ export function UrnaKeyboard({
   }, [digitsDisabled, corrigeDisabled, confirmDisabled, onDigit, onCorrige, onConfirma])
 
   return (
-    <div className="flex justify-center gap-3" role="group" aria-label="Teclado da urna">
-      <div className="grid grid-cols-3 gap-3">
+    <div className="flex justify-center gap-2 sm:gap-3" role="group" aria-label="Teclado da urna">
+      <div className="grid grid-cols-3 gap-2 sm:gap-3">
         {NUMBER_ROWS.flat().map((digit) => (
           <UrnaKey
             key={digit}
@@ -62,7 +62,7 @@ export function UrnaKeyboard({
             ariaLabel={`Tecla ${digit}`}
             disabled={digitsDisabled}
             onPress={() => onDigit(digit)}
-            className="text-xl"
+            className="text-base sm:text-xl"
           />
         ))}
         <span aria-hidden="true" />
@@ -72,18 +72,18 @@ export function UrnaKeyboard({
           ariaLabel="Tecla 0"
           disabled={digitsDisabled}
           onPress={() => onDigit('0')}
-          className="text-xl"
+          className="text-base sm:text-xl"
         />
         <span aria-hidden="true" />
       </div>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-2 sm:gap-3">
         <UrnaKey
           label="BRANCO"
           variant="blank"
           ariaLabel="Branco"
           disabled={brancoDisabled}
           onPress={onBranco}
-          className="min-w-24 whitespace-nowrap px-3 text-sm"
+          className="min-w-16 whitespace-nowrap px-1.5 text-[10px] sm:min-w-24 sm:px-3 sm:text-sm"
         />
         <UrnaKey
           label="CORRIGE"
@@ -91,7 +91,7 @@ export function UrnaKeyboard({
           ariaLabel="Corrige"
           disabled={corrigeDisabled}
           onPress={onCorrige}
-          className="min-w-24 whitespace-nowrap px-3 text-sm"
+          className="min-w-16 whitespace-nowrap px-1.5 text-[10px] sm:min-w-24 sm:px-3 sm:text-sm"
         />
         <UrnaKey
           label="CONFIRMA"
@@ -99,7 +99,7 @@ export function UrnaKeyboard({
           ariaLabel="Confirma"
           disabled={confirmDisabled}
           onPress={onConfirma}
-          className="min-w-24 whitespace-nowrap px-3 text-sm"
+          className="min-w-16 whitespace-nowrap px-1.5 text-[10px] sm:min-w-24 sm:px-3 sm:text-sm"
         />
       </div>
     </div>

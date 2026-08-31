@@ -18,3 +18,6 @@ export function useMediaQuery(query: string): boolean {
 export const MOBILE_PORTRAIT_QUERY = '(max-width: 768px) and (orientation: portrait)'
 // Phone-sized viewport, landscape (short height rules out tablets/desktops in landscape) — full-screen urna layout.
 export const MOBILE_LANDSCAPE_QUERY = '(max-height: 560px) and (orientation: landscape)'
+// Phone-sized viewport in either orientation — a phone rotated to landscape is still a phone (short,
+// not narrow), so this can't be a single Tailwind width breakpoint. Drives the compact/drawer header.
+export const MOBILE_ANY_ORIENTATION_QUERY = `${MOBILE_PORTRAIT_QUERY}, ${MOBILE_LANDSCAPE_QUERY}`

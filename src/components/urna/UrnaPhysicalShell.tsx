@@ -27,7 +27,7 @@ export function UrnaPhysicalShell({ screen, keyboard, layout = 'portrait' }: Urn
 
   return (
     <div className="mx-auto w-full max-w-md">
-      <div className="rounded-2xl bg-urna-case p-3 shadow-2xl ring-1 ring-black/10 sm:p-4">
+      <div className="rounded-2xl bg-urna-case p-2 shadow-2xl ring-1 ring-black/10 sm:p-4">
         <div className="rounded-md border-2 border-urna-glass-bezel bg-urna-glass-bezel p-1">
           {/* min-h keeps the screen's real-device presence even on short states (digit entry);
               no fixed aspect-ratio, so taller states (candidate review) never get clipped. flex-col
@@ -36,7 +36,7 @@ export function UrnaPhysicalShell({ screen, keyboard, layout = 'portrait' }: Urn
           <div className="flex min-h-[22rem] flex-col overflow-hidden rounded-sm bg-urna-glass">{screen}</div>
         </div>
 
-        <div className="mt-4 rounded-xl bg-urna-case-shadow/40 p-4">{keyboard}</div>
+        <div className="mt-2 rounded-xl bg-urna-case-shadow/40 p-2 sm:mt-4 sm:p-4">{keyboard}</div>
       </div>
 
       <div className="mx-auto h-3 w-2/3 rounded-b-xl bg-urna-case-shadow" aria-hidden="true" />

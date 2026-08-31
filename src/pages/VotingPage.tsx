@@ -36,25 +36,31 @@ export function VotingPage() {
 
   if (isMobileLandscape) {
     return (
-      <div className="fixed inset-0 z-40 bg-brand-bg">
-        <button
-          type="button"
-          onClick={() => {
-            reset()
-            navigate('/')
-          }}
-          aria-label="Sair e voltar ao início"
-          className="absolute right-2 top-2 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-brand-surface text-lg text-urna-text hover:bg-white/10"
-        >
-          ✕
-        </button>
-        <Urna
-          provider={provider}
-          selectedState={selectedState}
-          instruction={instruction}
-          onFinished={handleFinished}
-          layout="landscape"
-        />
+      <div className="fixed inset-0 z-40 flex flex-col bg-brand-bg">
+        {/* Own strip instead of floating over the urna — at this height the keyboard's
+            top-right key (BRANCO) sits right under an absolutely-positioned corner button. */}
+        <div className="flex shrink-0 justify-end p-1">
+          <button
+            type="button"
+            onClick={() => {
+              reset()
+              navigate('/')
+            }}
+            aria-label="Sair e voltar ao início"
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-surface text-lg text-urna-text hover:bg-white/10"
+          >
+            ✕
+          </button>
+        </div>
+        <div className="min-h-0 flex-1">
+          <Urna
+            provider={provider}
+            selectedState={selectedState}
+            instruction={instruction}
+            onFinished={handleFinished}
+            layout="landscape"
+          />
+        </div>
       </div>
     )
   }
