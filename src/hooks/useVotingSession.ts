@@ -44,7 +44,13 @@ export function useVotingSession(provider: CandidateProvider, selectedState: str
     if (state.confirmedVotes.length > prevConfirmedCountRef.current) {
       const lastVote = state.confirmedVotes[state.confirmedVotes.length - 1]
       audioService.play('CONFIRM')
-      audioService.speak(lastVote.kind === 'BLANK' ? voiceScript.blankConfirmed() : voiceScript.confirmed())
+      audioService.speak(
+        lastVote.kind === 'BLANK'
+          ? voiceScript.blankConfirmed()
+          : lastVote.kind === 'NULL'
+            ? voiceScript.nullConfirmed()
+            : voiceScript.confirmed(),
+      )
 
       if (state.status === 'FINISHED') {
         window.setTimeout(() => {

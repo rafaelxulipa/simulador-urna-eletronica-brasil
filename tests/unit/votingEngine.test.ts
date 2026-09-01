@@ -65,6 +65,23 @@ describe('voting engine', () => {
     expect(canConfirm(state)).toBe(false)
   })
 
+  it('CONFIRMA on INVALID records a NULL vote and advances to the next office', () => {
+    let state = createInitialVotingState(NOW)
+    state = typeDigits(state, '9999')
+    state = applyVotingEvent(state, { type: 'CANDIDATE_RESOLVED', candidate: null, now: NOW })
+    expect(state.status).toBe('INVALID')
+    expect(canConfirm(state)).toBe(false)
+
+    state = applyVotingEvent(state, { type: 'TICK', now: NOW + CONFIRM_LOCK_MS })
+    expect(canConfirm(state)).toBe(true)
+
+    state = applyVotingEvent(state, { type: 'CONFIRMA', now: NOW + CONFIRM_LOCK_MS })
+    expect(state.confirmedVotes).toHaveLength(1)
+    expect(state.confirmedVotes[0].kind).toBe('NULL')
+    expect(state.sequenceIndex).toBe(1)
+    expect(state.status).toBe('ENTER_NUMBER')
+  })
+
   it('CORRIGE returns to ENTER_NUMBER and clears state from any non-finished status', () => {
     let state = createInitialVotingState(NOW)
     state = typeDigits(state, '1234')

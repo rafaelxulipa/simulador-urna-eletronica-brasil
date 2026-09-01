@@ -25,7 +25,10 @@ export function isReadyForLookup(state: VotingEngineState): boolean {
 }
 
 export function canConfirm(state: VotingEngineState): boolean {
-  return (state.status === 'SHOW_CANDIDATE' || state.status === 'BLANK') && !state.confirmLocked
+  return (
+    (state.status === 'SHOW_CANDIDATE' || state.status === 'BLANK' || state.status === 'INVALID') &&
+    !state.confirmLocked
+  )
 }
 
 export function canCorrect(state: VotingEngineState): boolean {
@@ -90,7 +93,7 @@ export function applyVotingEvent(state: VotingEngineState, event: VotingEvent): 
     case 'CANDIDATE_RESOLVED': {
       if (!isReadyForLookup(state)) return state
       if (!event.candidate) {
-        return { ...state, status: 'INVALID', candidate: null }
+        return withUnlockTimer({ ...state, status: 'INVALID', candidate: null }, event.now)
       }
       return withUnlockTimer({ ...state, status: 'SHOW_CANDIDATE', candidate: event.candidate }, event.now)
     }
@@ -107,7 +110,9 @@ export function applyVotingEvent(state: VotingEngineState, event: VotingEvent): 
       const vote =
         state.status === 'BLANK'
           ? { office: state.office, kind: 'BLANK' as const }
-          : { office: state.office, kind: 'CANDIDATE' as const, candidate: state.candidate ?? undefined }
+          : state.status === 'INVALID'
+            ? { office: state.office, kind: 'NULL' as const }
+            : { office: state.office, kind: 'CANDIDATE' as const, candidate: state.candidate ?? undefined }
       const confirmed = { ...state, confirmedVotes: [...state.confirmedVotes, vote] }
       return advanceToNextOffice(confirmed)
     }

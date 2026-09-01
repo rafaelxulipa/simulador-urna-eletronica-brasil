@@ -13,6 +13,7 @@ export const voiceScript = {
   blank: () => 'Voto em branco.',
   confirmed: () => 'Voto confirmado.',
   blankConfirmed: () => 'Voto em branco confirmado.',
+  nullConfirmed: () => 'Voto nulo confirmado.',
   corrected: () => 'Vamos tentar novamente.',
   finished: () => 'Votação concluída.',
 }

@@ -9,7 +9,7 @@ export type VotingStatus =
 
 export interface ConfirmedVote {
   office: OfficeConfig
-  kind: 'CANDIDATE' | 'BLANK'
+  kind: 'CANDIDATE' | 'BLANK' | 'NULL'
   candidate?: Candidate
 }
 

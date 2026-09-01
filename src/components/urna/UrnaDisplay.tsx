@@ -87,7 +87,11 @@ export function UrnaDisplay({ state, instruction, compact = false }: UrnaDisplay
           <div className={`flex flex-col items-center ${compact ? 'gap-1.5' : 'gap-3'} text-center`}>
             <p className={`font-bold text-urna-correct ${headlineClass}`}>NÚMERO NÃO ENCONTRADO</p>
             <p>Confira os números digitados.</p>
-            <p className="text-urna-glass-text-secondary">Aperte CORRIGE (laranja) para tentar novamente.</p>
+            <p className="text-sm">
+              {confirmLocked
+                ? 'Aguarde um instante...'
+                : 'Aperte CONFIRMA (verde) para votar nulo, ou CORRIGE (laranja) para tentar novamente.'}
+            </p>
           </div>
         )}
 
