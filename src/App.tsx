@@ -8,6 +8,7 @@ import { StateSelectPage } from '@/pages/StateSelectPage'
 import { ModeSelectPage } from '@/pages/ModeSelectPage'
 import { VotingPage } from '@/pages/VotingPage'
 import { FinishedPage } from '@/pages/FinishedPage'
+import { CheatSheetPage } from '@/pages/CheatSheetPage'
 import { SourcesPage } from '@/pages/SourcesPage'
 import { TermsPage } from '@/pages/TermsPage'
 import { PrivacyPage } from '@/pages/PrivacyPage'
@@ -29,6 +30,7 @@ function App() {
             <Route path="modo" element={<ModeSelectPage />} />
             <Route path="votar" element={<VotingPage />} />
             <Route path="concluido" element={<FinishedPage />} />
+            <Route path="colinha" element={<CheatSheetPage />} />
           </Route>
         </Route>
       </Routes>

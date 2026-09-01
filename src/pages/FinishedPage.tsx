@@ -1,4 +1,4 @@
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useSessionStore } from '@/stores/sessionStore'
 
 export function FinishedPage() {
@@ -55,6 +55,13 @@ export function FinishedPage() {
           Voltar ao início
         </button>
       </div>
+
+      <Link
+        to="/colinha"
+        className="flex min-h-14 items-center rounded-xl border border-urna-text-secondary/40 px-6 py-3 text-lg font-semibold hover:bg-white/10"
+      >
+        🖨️ Imprimir colinha para a votação
+      </Link>
 
       {selectedState && <p className="text-xs text-urna-text-secondary">Treino realizado para: {selectedState}</p>}
     </div>

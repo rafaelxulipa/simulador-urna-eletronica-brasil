@@ -121,3 +121,48 @@ body {
 :root[data-contrast='high'] body {
   background: #000000;
 }
+
+/*
+ * The colinha (cheat sheet) is the only page meant to be printed. Rather
+ * than sprinkle `print:hidden` across AppShell/header/footer/widgets, hide
+ * everything and re-reveal just the .print-area subtree — the classic
+ * print-isolation trick, robust to whatever chrome wraps it.
+ */
+@media print {
+  /* `body *` below hides every descendant, but not <body> itself — without
+     this its own dark theme background (and the high-contrast override)
+     would still paint behind/around the small card. */
+  body {
+    background: #fff !important;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border: 0;
+    box-shadow: none;
+  }
+  /* Card backgrounds/colors are the point of the redesigned colinha — browsers
+     strip them by default when printing unless explicitly told to keep them. */
+  .print-area,
+  .print-area * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  [vw] {
+    display: none !important;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 14mm;
+}
